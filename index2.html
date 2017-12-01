@@ -1,0 +1,121 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>hello phaser!</title>
+    <script src="//cdn.jsdelivr.net/phaser/2.5.0/phaser.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+
+    window.onload = function() {
+
+        var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+
+        function preload() {
+            game.load.spritesheet('bot','assets/trump_run.png',600/6,400/4,24);
+
+        }
+
+        var s;
+//too fast
+//framerate=60;
+        //slowish
+        //var framerate=6;
+
+        //decent transitions
+         var framerate=12;
+        //hasty
+        // var framerate=18;
+        function create() {
+
+            s = game.add.sprite(game.world.centerX, game.world.centerY, 'bot');
+            s.anchor.setTo(0.5, 0.5);
+            s.scale.setTo(2, 2);
+
+            s.animations.add('down',[0,1,2,3,4,5],framerate,true);
+            s.animations.add('right',[6,7,8,9,10,11],framerate,true);
+            s.animations.add('up',[12,13,14,15,16,17],framerate,true);
+            s.animations.add('left',[18,19,20,21,22,23],framerate,true);
+
+        }
+
+        function update() {
+
+            if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
+            {
+                //s.animations.paused = true;
+               s.animations.play('left',false);
+                s.x -= 4;
+
+            }
+            else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
+            {//
+                // s.animations.paused = false;
+                s.animations.play('right',false);
+                s.x += 4;
+                //
+                // s.animations.paused = true;
+            }
+
+            if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
+            {
+                //s.animations.paused = false;
+                s.animations.play('up',false);
+                s.y -= 4;
+               // s.animations.next(1);
+            }
+            else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
+            {//
+                // s.animations.paused = false;
+                s.animations.play('down',false);
+                s.y += 4;
+            }
+            else if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
+            {//s.animations.paused = false;
+
+                s.y += 10;
+                s.y += -10;
+            }
+            //s.add(onInputUpHandler())
+
+
+
+            game.input.keyboard.onUpCallback = function( e ){
+                s.animations.stop();
+                //s.animations.paused=true;
+            };
+                // s.animations.paused = false;
+
+            //var lastkey=game.input.keyboard.addKey(Phaser.Keyboard.lastKey);
+
+         //   lastkey.onDown.add(function() {
+           //     s.animations.stop();
+            //});
+
+            //     if(lastkey.downDuration(1))
+         //       s.animations.stop();
+
+        }
+
+        function render() {
+            game.debug.spriteInfo(s, 20, 32);
+
+        }
+/*
+*                                             Trump Maze
+*               Features
+* Trump says a dialog when he meets a dead end!!
+* Trump joke upon success!!
+*
+*
+*
+* */
+
+    };
+
+</script>
+
+</body>
+</html>
